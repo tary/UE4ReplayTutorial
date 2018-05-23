@@ -19,13 +19,8 @@ void UReplayGameInstance::Init()
 	OnDeleteFinishedStreamCompleteDelegate = FOnDeleteFinishedStreamComplete::CreateUObject(this, &UReplayGameInstance::OnDeleteFinishedStreamComplete);
 }
 
-static const FString REPLAY_OPTION_STR = "ReplayStreamerOverride=InMemoryNetworkReplayStreaming";
-
-
 void UReplayGameInstance::StartRecordingReplayFromBP(FString ReplayName, FString FriendlyName)
 {
-	//TArray<FString> Options;
-	//Options.Add(REPLAY_OPTION_STR);
 	StartRecordingReplay(ReplayName, FriendlyName);
 }
 
@@ -36,8 +31,6 @@ void UReplayGameInstance::StopRecordingReplayFromBP()
 
 void UReplayGameInstance::PlayReplayFromBP(FString ReplayName)
 {
-	//TArray<FString> Options;
-	//Options.Add(REPLAY_OPTION_STR);
 	PlayReplay(ReplayName, nullptr);
 }
 
