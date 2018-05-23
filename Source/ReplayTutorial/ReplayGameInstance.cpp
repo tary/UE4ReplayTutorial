@@ -12,16 +12,21 @@ void UReplayGameInstance::Init()
 	Super::Init();
 
 	// create a ReplayStreamer for FindReplays() and DeleteReplay(..)
-	EnumerateStreamsPtr = FNetworkReplayStreaming::Get().GetFactory().CreateReplayStreamer();
+	EnumerateStreamsPtr = FNetworkReplayStreaming::Get().GetFactory(_TEXT("InMemoryNetworkReplayStreaming")).CreateReplayStreamer();
 	// Link FindReplays() delegate to function
 	OnEnumerateStreamsCompleteDelegate = FOnEnumerateStreamsComplete::CreateUObject(this, &UReplayGameInstance::OnEnumerateStreamsComplete);
 	// Link DeleteReplay() delegate to function
 	OnDeleteFinishedStreamCompleteDelegate = FOnDeleteFinishedStreamComplete::CreateUObject(this, &UReplayGameInstance::OnDeleteFinishedStreamComplete);
 }
 
+static const FString REPLAY_OPTION_STR = "ReplayStreamerOverride=InMemoryNetworkReplayStreaming";
+
+
 void UReplayGameInstance::StartRecordingReplayFromBP(FString ReplayName, FString FriendlyName)
 {
-	StartRecordingReplay(ReplayName, FriendlyName);
+	TArray<FString> Options;
+	Options.Add(REPLAY_OPTION_STR);
+	StartRecordingReplay(ReplayName, FriendlyName, Options);
 }
 
 void UReplayGameInstance::StopRecordingReplayFromBP()
@@ -31,7 +36,9 @@ void UReplayGameInstance::StopRecordingReplayFromBP()
 
 void UReplayGameInstance::PlayReplayFromBP(FString ReplayName)
 {
-	PlayReplay(ReplayName, nullptr);
+	TArray<FString> Options;
+	Options.Add(REPLAY_OPTION_STR);
+	PlayReplay(ReplayName, nullptr, Options);
 }
 
 void UReplayGameInstance::StopPlayReplayFromBP()
