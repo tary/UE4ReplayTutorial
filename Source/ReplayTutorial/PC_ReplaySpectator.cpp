@@ -6,7 +6,6 @@
 
 APC_ReplaySpectator::APC_ReplaySpectator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	bShowMouseCursor = true;
 	PrimaryActorTick.bTickEvenWhenPaused = true;
 	bShouldPerformFullTickWhenPaused = true;
 }
